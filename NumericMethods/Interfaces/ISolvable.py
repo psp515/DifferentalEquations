@@ -7,9 +7,14 @@ from Utils.Solution import Solution
 
 
 class ISolvable:
-    def __init__(self, functions, method_name):
+    def __init__(self, functions, name, chart_color):
         self.functions = functions
-        self.method_name = method_name
+        self.name = name
+
+        if not isinstance(chart_color, str):
+            raise InvalidArgumentInstanceException("Chart color should be string.")
+
+        self.chart_color = chart_color
 
     def _method(self, i, results, linspace):
         return 0
@@ -22,4 +27,4 @@ class ISolvable:
         for i in range(n-1):
             results[i+1] = self._method(i, results, linspace)
 
-        return Solution(linspace, results, self.method_name)
+        return Solution(linspace, results, self.name, self.chart_color)

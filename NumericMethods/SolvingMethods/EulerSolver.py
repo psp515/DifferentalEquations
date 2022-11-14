@@ -1,13 +1,12 @@
 import types
 from inspect import getfullargspec
-
 from Interfaces.ISolvable import ISolvable
 from Utils.InvalidArgumentInstanceException import InvalidArgumentInstanceException
 
 
 class EulerSolver(ISolvable):
-    def __init__(self, functions, method_name):
-        super().__init__(functions, method_name)
+    def __init__(self, functions, name, chart_color='black'):
+        super().__init__(functions, name, chart_color)
 
         if not isinstance(functions, types.FunctionType):
             raise InvalidArgumentInstanceException("Functions should be single function.")

@@ -5,20 +5,33 @@ import pandas as pd
 from scipy.integrate import odeint
 
 from SolvingMethods.EulerSolver import EulerSolver
+from SolvingMethods.MidpointSolver import MidpointSolver
+from SolvingMethods.NumpySolver import NumpySolver
 
 
 def f1(x, t):
     return -3*x+2*np.exp(-t)
 
-if __name__ == '__main__':
-    print('Program starts')
-    init = 2
-    t1 = np.linspace(0, 1, 11)
-    sol_d1 = odeint(f1, init, t1)
-    sol_d2 = EulerSolver(f1, "Euler").solve(init, 0, 1, 11)
-    plt.plot(t1, sol_d1[:, 0], 'blue', label=r'$dokładne$')
-    plt.plot(t1, sol_d2.results, 'red', label=rf'${sol_d2.method_name}$')
+def make_plot(solutions):
+    for sol in solutions:
+        plt.plot(sol.x, sol.results, sol.chart_color, label=rf'${sol.name}$')
+
     plt.legend(loc='best')
     plt.xlabel('t')
     plt.grid()
     plt.show()
+
+if __name__ == '__main__':
+    print('Program starts')
+    init, a, b, n = 2, 0, 1, 11
+
+    solutions = []
+    methods = [NumpySolver(f1, "Optimal", 'black'),
+               EulerSolver(f1, "Euler", 'red'),
+               MidpointSolver(f1, "Midpoint", 'green'),
+               MidpointSolver(f1, "Runge-Kutt", 'yellow')]
+
+    for method in methods:
+        solutions.append(method.solve(init, a, b, n))
+
+    make_plot(solutions)
