@@ -1,11 +1,14 @@
 from inspect import getfullargspec
 from types import FunctionType
 
+from wand.display import display
+
 from Utils.Solution import Solution
 from Utils.InvalidArgumentInstanceException import InvalidArgumentInstanceException
 from Utils.UnimplementedException import UnimplementedException
 
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 class ISolver:
@@ -57,7 +60,7 @@ class ISolver:
         :return: Solution class with results.
         '''
 
-        if self.solution != None and self.solution.compare_arguments(x0, a, b):
+        if self.solution != None and self.solution.compare(x0, a, b):
             return self.solution
 
         linspace = np.linspace(a, b, n)
@@ -67,7 +70,7 @@ class ISolver:
         for i in range(n-1):
             results[i+1] = self._method(i, results, linspace)
 
-        self.solution = Solution(linspace, results, self.name, self.chart_color)
+        self.solution = Solution(linspace, results, self.name, self.functions, self.chart_color)
 
         return self.solution
 
@@ -93,7 +96,7 @@ class ISolver:
         plt.show()
 
 
-    def get_global_error(self, x0, a, b, n):
+    def get_global_error(self, x0=None, a=None, b=None, n=None):
         '''
         Method compares solution with optimal solution calculated with NumpySolver.
         :param x0: Starting value
@@ -102,15 +105,22 @@ class ISolver:
         :param n: Number of intervals.
         :returns: Biggest difference between optimal value and calculated.
         '''
-        solution = self.solve(x0, a, b, n)
-        optimal_solution = self._get_optimal(x0, a, b, n)
+        solution = self.solve(x0, a, b, n).results
+        optimal_solution = self._get_optimal(x0, a, b, n).results
 
-        return max(abs(solution[:, 0]-optimal_solution[:, 0]))
+        return max([abs(solution[i]-optimal_solution[i]) for i in range(n)])
+
+    def draw_frame(self, x0, a, b, n):
+        solution = self.solve(x0, a, b, n).results
+        optimal_solution = self._get_optimal(x0, a, b, n).results
+        array = {'t': solution.space, 'Optimal': optimal_solution.results, f'{self.name}': solution.results}
+        tab = pd.DataFrame(array)
+        display(tab)
 
     def _get_optimal(self, x0, a, b, n):
         from SolvingMethods.NumpySolver import NumpySolver
 
-        if self.optimal_solution is None or not self.optimal_solution.compare_arguments(x0, a, b, n):
+        if self.optimal_solution is None or not self.optimal_solution.compare(x0, a, b, n, self.functions):
             self.optimal_solution = NumpySolver(self.functions).solve(x0, a, b, n)
 
         return self.optimal_solution

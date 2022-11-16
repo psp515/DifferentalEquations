@@ -11,7 +11,9 @@ class NumpySolver(ISolver):
 
     def solve(self, x0, a, b, n):
         linspace = np.linspace(a, b, n)
-        return Solution(linspace, odeint(self.functions, x0, linspace), self.name, self.chart_color)
+        sol = odeint(self.functions, x0, linspace)
+        # array is simplyfied here
+        return Solution(linspace, [x[0] for x in sol], self.name, self.chart_color)
 
     def draw_plot(self, x0, a, b, n, draw_optimal_solution=False):
         super().draw_plot(x0, a, b, n, False)

@@ -1,8 +1,6 @@
 import scipy as sp
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
-from scipy.integrate import odeint
 
 from SolvingMethods.EulerSolver import EulerSolver
 from SolvingMethods.MidpointSolver import MidpointSolver
@@ -12,7 +10,7 @@ from SolvingMethods.TaylorSolver import TaylorSolver
 
 
 def f(x, t):
-    return -(x/t) + 1 + 1/t
+    return -3*x+2*np.exp(-t)
 
 def f1(x, t):
     return x-1/t**2
@@ -32,18 +30,20 @@ def make_plot(solutions):
 if __name__ == '__main__':
     print('Program starts')
     print('Initializing data...')
-    init, a, b, n = 0, 1, 2, 10
+    init, a, b, n = 2, 0, 1, 11
     solutions = []
     methods = [NumpySolver(f, chart_color='black'),
                EulerSolver(f, chart_color='red'),
                MidpointSolver(f, chart_color='green'),
-               RungeKutt4Solver(f, chart_color='yellow'),
-               TaylorSolver([f, f12], chart_color='blue')]
+               RungeKutt4Solver(f, chart_color='yellow'),]
+               #TaylorSolver([f, f12], chart_color='blue')]
     print('Calculating data...')
 
-    #for method in methods:
-        #solutions.append(method.solve(init, a, b, n))
-    EulerSolver(f, chart_color='black').draw_plot(init, a, b, n, True)
+
+    print(EulerSolver(f, chart_color='red').draw_frame(init,a,b,n))
+
+    for method in methods:
+        solutions.append(method.solve(init, a, b, n))
     print('Creating graph...')
-    #make_plot(solutions)
+    make_plot(solutions)
     print('Program Finished')
