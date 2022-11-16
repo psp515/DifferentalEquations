@@ -1,22 +1,38 @@
-import types
 from inspect import getfullargspec
-
-from Interfaces.ISolvable import ISolvable
+from Interfaces.ISolver import ISolver
 from Utils.InvalidArgumentInstanceException import InvalidArgumentInstanceException
 
 
-class TaylorSolver(ISolvable):
-    def __init__(self, functions, method_name):
-        super().__init__(functions, method_name)
+class TaylorSolver(ISolver):
+    def __init__(self, functions, name='Taylor', chart_color='black'):
 
-        if not isinstance(functions, types.FunctionType):
-            raise InvalidArgumentInstanceException("Functions should be single function.")
+        if not type(functions) == list:
+            raise InvalidArgumentInstanceException("Functions should be list of functions.")
 
-        inspection = getfullargspec(functions)
+        if len(functions) == 0:
+            raise InvalidArgumentInstanceException("Functions should contain at least one function.")
 
-        if len(inspection[0]) != 2:
-            raise InvalidArgumentInstanceException("Functions should be function having 2 parameters.")
+        for f in functions:
+            inspection = getfullargspec(f)
+            if len(inspection[0]) != 2:
+                raise InvalidArgumentInstanceException("Each function should have 2 parameters.")
+
+        if not isinstance(chart_color, str):
+            raise InvalidArgumentInstanceException("Chart color should be string.")
+
+        self.chart_color = chart_color
+        self.functions = functions
+        self.name = name
 
     def _method(self, i, results, linspace):
-        #todo
-        pass
+        diff = linspace[i+1] - linspace[i]
+        f_count = len(self.functions)
+        result = results[i]
+        x, t = results[i], linspace[i]
+        sil = 1
+        for j in range(f_count):
+            sil = sil / (j + 1)
+            k = self.functions[j](x, t)
+            result += sil * k * (diff**(j+1))
+
+        return result
