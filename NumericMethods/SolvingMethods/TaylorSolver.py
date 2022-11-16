@@ -23,6 +23,8 @@ class TaylorSolver(ISolver):
         self.chart_color = chart_color
         self.functions = functions
         self.name = name
+        self.solution = None
+        self.optimal_solution = None
 
     def _method(self, i, results, linspace):
         diff = linspace[i+1] - linspace[i]
