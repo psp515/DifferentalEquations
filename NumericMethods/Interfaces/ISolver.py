@@ -13,6 +13,7 @@ class ISolver:
     '''
     Interface created for implementing in numeric methods that calculates 2 parameter functions.
     Class should be representing a mathematical function, that can take different parameters to get required data.
+    Displays last calculated data.
     '''
     def __init__(self, functions, name, chart_color):
         '''
@@ -104,15 +105,26 @@ class ISolver:
         plt.grid()
         plt.show()
 
-    def draw_global_error(self):
+    def draw_global_error(self, round_digits=5):
+        '''
+        Function draws biggest difference between optimal and calculated solution
+        :param: Rounds number to specified number of digits
+        '''
+
+        if round_digits < 0:
+            round_digits = 0
+
         if self.solution == None:
             print('Please solve solution first.')
             return
 
         print(f'Name: {self.name}')
-        print(f': {self._get_global_error()}')
+        print(f'Global Error: {round(self._get_global_error(), round_digits)}')
 
     def draw_frame(self):
+        '''
+        Function draws data frame with comparatin between method solution and optimal solution
+        '''
         if self.solution == None:
             print('Please solve solution first.')
             return
@@ -138,14 +150,25 @@ class ISolver:
         raise UnimplementedException("Method must be implemented in order to use it.")
 
     def _get_global_error(self):
+        """
+        :return: maximal difference between optimal and calculated solution
+        """
         return max([abs(self.solution.results[i]-self.optimal_solution.results[i]) for i in range(len(self.solution.results))])
 
     def _get_optimal_solution(self, x0, a, b, n):
-        from SolvingMethods.NumpySolver import NumpySolver
+        '''
+        Returns solution of calculations with use of odeint.
+        :param x0: Starting value
+        :param a: Compartment start.
+        :param b: Compartment end.
+        :param n: Number of intervals.
+        :return: Solution class with results.
+        '''
+        from SolvingMethods.OdeintSolver import OdeintSolver
         if type(self.functions) == list:
-            return NumpySolver(self.functions[0]).solve(x0, a, b, n)
+            return OdeintSolver(self.functions[0]).solve(x0, a, b, n)
 
-        return NumpySolver(self.functions).solve(x0, a, b, n)
+        return OdeintSolver(self.functions).solve(x0, a, b, n)
 
     #endregion
 

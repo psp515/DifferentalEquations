@@ -29,7 +29,9 @@ if __name__ == '__main__':
     print('Calculating data...')
 
     for method in methods:
-        method.draw_plot(init, a, b, n, True)
-        method.draw_frame(init, a, b, n)
+        method.solve(init, a, b, n)
+        method.draw_plot(True)
+        method.draw_frame()
+        method.draw_global_error()
 
     print('Program Finished')

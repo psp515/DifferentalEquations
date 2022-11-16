@@ -5,7 +5,7 @@ from Utils.Solution import Solution
 
 import numpy as np
 
-class NumpySolver(ISolver):
+class OdeintSolver(ISolver):
     def __init__(self, functions, name='Optimal', chart_color='black'):
         super().__init__(functions, name, chart_color)
 
