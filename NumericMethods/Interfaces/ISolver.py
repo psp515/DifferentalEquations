@@ -17,7 +17,7 @@ class ISolver:
     '''
     def __init__(self, functions, name, chart_color):
         '''
-        Function initializes solve method and chceks if parameters are valid for calculation and displaying.
+        Function initializes solve method and checks if parameters are valid for calculation and displaying.
         :param functions: 2 parameter function representing equations (Could be 2 parameter functions but you need to create own __init__).
         :param name: Name to be displayed.
         :param chart_color: Default color on chart.
@@ -107,7 +107,7 @@ class ISolver:
 
     def draw_global_error(self, round_digits=5):
         '''
-        Function draws biggest difference between optimal and calculated solution
+        Function draws the biggest difference between optimal and calculated solution
         :param: Rounds number to specified number of digits
         '''
 

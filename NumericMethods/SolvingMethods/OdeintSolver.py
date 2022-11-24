@@ -15,8 +15,5 @@ class OdeintSolver(ISolver):
         # array is simplyfied here
         return Solution(linspace, [x[0] for x in sol], self.name, self.chart_color)
 
-    def draw_plot(self, x0, a, b, n, draw_optimal_solution=False):
-        super().draw_plot(x0, a, b, n, False)
-
     def _get_optimal(self, x0, a, b, n):
         return self.solve(x0, a, b, n)

@@ -27,14 +27,15 @@ class TaylorSolver(ISolver):
         self._optimal_solution = None
 
     def _method(self, i, results, linspace):
-        diff = linspace[i+1] - linspace[i]
-        f_count = len(self.functions)
+        diff = linspace[i + 1] - linspace[i]
         result = results[i]
         x, t = results[i], linspace[i]
         sil = 1
-        for j in range(f_count):
+
+        for j in range(len(self.functions)):
             sil = sil / (j + 1)
             k = self.functions[j](x, t)
-            result += sil * k * (diff**(j+1))
+            z = j+1
+            result += sil * k * (diff**z)
 
         return result
