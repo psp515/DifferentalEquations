@@ -1,6 +1,6 @@
 <div align="center">
   
-  <h1> DifferentalEquations </h1>
+  <h1> Differental Equations </h1>
   <p> Interesting stuff but hard to understand. </p>
   
   <div>
