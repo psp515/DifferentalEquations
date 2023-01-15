@@ -28,14 +28,19 @@
 
 This repository contains projects created for differental equations course.
 
-- Numerical Methods
-- This project is focused on calculating equations with simple numerical methods
-- - Euler Method (EulerSolver)
-- - Midpoint Method (MidpointSolver)
-- - Taylor Method order n (TaylorSolver)
-- - Runge-Kutt Method order 4 (RungeKutt4Solver)
-- - Description and conclusion in Polish for functions with specified parameters. 
+#### Numerical Methods 
+This project is focused on calculating equations with simple numerical methods like:
+- Euler Method (EulerSolver)
+- Midpoint Method (MidpointSolver)
+- Taylor Method order n (TaylorSolver)
+- Runge-Kutt Method order 4 (RungeKutt4Solver)
+- Description and conclusion in Polish for functions with specified parameters. 
 
+#### FDM
+
+This project contains pdf file with matrix derivation for equation (equation with boundary conditions is on top of pdf) and c++ program to solve it.
+Program uses adjacency matrix to calculate inverse of matrix.
+Program returns solution for n = 10 and n = 50 (n is number of compartments).
 
 ### Built With
 
@@ -43,15 +48,15 @@ This repository contains projects created for differental equations course.
   <a>
     <img src="https://img.shields.io/badge/-Python-FFFFFF?logo=python" />
   </a>
+  <a>
+    <img src="https://img.shields.io/badge/-C++-FFFFFF?logo=c++" />
+  </a>
 </div>
 
-### Getting Started
-
-In order to use algorithms download the repository.
 
 ### Usage 
 
-Repository might help with understanding differences between numeric methods.
+Repository might help with understanding differences between numeric methods and with how FDM method works.
 
 ### License
 
