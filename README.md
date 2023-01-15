@@ -1,7 +1,7 @@
 <div align="center">
   
-  <h1> Algorithms </h1>
-  <p> Feeling the rhythm? </p>
+  <h1> DifferentalEquations </h1>
+  <p> Interesting stuff but hard to understand. </p>
   
   <div>
     <a href="">
